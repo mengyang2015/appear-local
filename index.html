@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AppearLocal AI — GEO Auditing for Local Businesses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --teal: #0a9e77;
+      --teal-hover: #088a67;
+      --teal-light: #e0f5ee;
+      --teal-mid: #9addc7;
+      --dark: #0f1117;
+      --mid: #374151;
+      --muted: #6b7280;
+      --border: #e2e8f0;
+      --bg: #ffffff;
+      --bg2: #f8fafc;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: var(--dark);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 48px;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo svg { width: 36px; height: 36px; }
+    .nav-wordmark { font-size: 22px; font-weight: 400; color: var(--dark); letter-spacing: -0.3px; font-family: 'Inter', sans-serif; }
+    .nav-wordmark span { font-weight: 700; color: var(--teal); }
+    .nav-wordmark em { font-style: normal; font-weight: 300; color: var(--teal); opacity: 0.6; letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; letter-spacing: 0.2px; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-cta { background: var(--teal); color: #fff !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--teal-hover) !important; }
+
+    /* HERO */
+    #hero {
+      padding: 164px 48px 100px;
+      max-width: 1060px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; margin-bottom: 20px; }
+    .hero-h1 { font-family: 'Inter', sans-serif; font-size: 52px; line-height: 1.1; color: var(--dark); margin-bottom: 24px; font-weight: 800; letter-spacing: -1.5px; }
+    .hero-h1 em { font-style: italic; color: var(--teal); }
+    .hero-sub { font-size: 17px; line-height: 1.75; color: var(--mid); margin-bottom: 36px; max-width: 420px; font-weight: 400; }
+    .hero-actions { display: flex; gap: 14px; align-items: center; }
+    .btn-primary { background: var(--teal); color: #fff; padding: 14px 28px; border-radius: 7px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--teal-hover); }
+    .btn-ghost { color: var(--mid); font-size: 15px; font-weight: 500; text-decoration: none; padding: 14px 4px; border-bottom: 1px solid var(--border); transition: color 0.2s, border-color 0.2s; }
+    .btn-ghost:hover { color: var(--teal); border-color: var(--teal); }
+
+    /* SCORE CARD */
+    .score-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 32px; box-shadow: 0 2px 40px rgba(0,0,0,0.06); }
+    .score-card-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
+    .score-big { font-family: 'Inter', sans-serif; font-size: 64px; color: var(--dark); line-height: 1; margin-bottom: 4px; font-weight: 800; letter-spacing: -2px; }
+    .score-big span { color: var(--teal); }
+    .score-biz { font-size: 13px; color: var(--muted); margin-bottom: 24px; font-weight: 400; }
+    .score-bar-wrap { margin-bottom: 10px; }
+    .score-bar-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; color: var(--mid); margin-bottom: 6px; }
+    .score-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .score-bar-fill { height: 100%; border-radius: 99px; background: var(--teal); }
+    .score-tag { display: inline-block; background: #fef2f2; color: #b91c1c; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 4px; margin-top: 16px; }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); max-width: 1060px; margin: 0 auto; }
+
+    /* SERVICES */
+    #services { background: var(--bg2); padding: 100px 0; }
+    .services-inner { max-width: 1060px; margin: 0 auto; padding: 0 48px; }
+    .section-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; margin-bottom: 12px; }
+    .section-h2 { font-family: 'Inter', sans-serif; font-size: 38px; line-height: 1.15; color: var(--dark); margin-bottom: 14px; font-weight: 700; letter-spacing: -1px; }
+    .section-sub { font-size: 16px; color: var(--mid); line-height: 1.75; max-width: 520px; margin-bottom: 56px; font-weight: 400; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .service-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 32px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .service-card:hover { border-color: var(--teal-mid); box-shadow: 0 4px 24px rgba(10,158,119,0.08); }
+    .service-icon { width: 40px; height: 40px; background: var(--teal-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .service-icon svg { width: 20px; height: 20px; }
+    .service-title { font-size: 15px; font-weight: 600; color: var(--dark); margin-bottom: 10px; }
+    .service-desc { font-size: 14px; line-height: 1.7; color: var(--mid); font-weight: 400; }
+
+    /* AUDIT */
+    #audit { padding: 100px 48px; max-width: 1060px; margin: 0 auto; }
+    .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .audit-findings { display: flex; flex-direction: column; gap: 16px; }
+    .finding { display: flex; gap: 14px; align-items: flex-start; padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
+    .finding-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .dot-red { background: #dc2626; }
+    .dot-yellow { background: #d97706; }
+    .dot-green { background: var(--teal); }
+    .finding-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 4px; }
+    .finding-text span { font-size: 13px; color: var(--mid); line-height: 1.6; font-weight: 400; }
+    .competitor-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .competitor-table th { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; text-align: left; padding: 0 0 12px; border-bottom: 1px solid var(--border); }
+    .competitor-table td { font-size: 14px; font-weight: 400; color: var(--mid); padding: 14px 0; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .competitor-table tr:last-child td { border-bottom: none; }
+    .biz-name { font-weight: 600; color: var(--dark); }
+    .biz-you { color: var(--teal); font-weight: 600; }
+    .score-pill { display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 13px; font-weight: 600; }
+    .pill-red { background: #fef2f2; color: #b91c1c; }
+    .pill-gray { background: #f1f5f9; color: #374151; }
+    .mini-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .mini-bar { width: 80px; height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .mini-bar-fill { height: 100%; border-radius: 99px; }
+
+    /* CONTACT */
+    #contact { background: var(--dark); padding: 100px 0; }
+    .contact-inner { max-width: 1060px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    #contact .section-eyebrow { color: var(--teal); }
+    #contact .section-h2 { color: #fff; }
+    #contact .section-sub { color: #d1d5db; margin-bottom: 0; font-weight: 400; }
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-label { font-size: 13px; font-weight: 600; letter-spacing: 0.3px; color: #e5e7eb; }
+    .form-input, .form-textarea { background: #1e2535; border: 1px solid #374151; border-radius: 7px; padding: 13px 16px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 400; color: #f9fafb; outline: none; transition: border-color 0.2s; }
+    .form-input::placeholder, .form-textarea::placeholder { color: #6b7280; }
+    .form-input:focus, .form-textarea:focus { border-color: var(--teal); background: #232b3e; }
+    .form-textarea { resize: vertical; min-height: 110px; }
+    .form-submit { background: var(--teal); color: #fff; border: none; padding: 14px 28px; border-radius: 7px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; align-self: flex-start; }
+    .form-submit:hover { background: var(--teal-hover); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid #1e2330; background: var(--dark); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 13px; color: #9ca3af; font-weight: 400; }
+    footer a { color: var(--teal); text-decoration: none; font-size: 13px; font-weight: 500; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.6s ease both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.22s; }
+    .delay-3 { animation-delay: 0.36s; }
+    .delay-4 { animation-delay: 0.5s; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 40px; }
+      .hero-h1 { font-size: 36px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .audit-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; padding: 0 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 8px; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">
+    <!-- Search lens with pin icon -->
+    <svg width="38" height="38" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Lens circle -->
+      <circle cx="22" cy="20" r="16" stroke="#0cb88a" stroke-width="2.4"/>
+      <!-- Handle -->
+      <line x1="33" y1="31" x2="44" y2="43" stroke="#0cb88a" stroke-width="3" stroke-linecap="round"/>
+      <!-- Pin inside lens -->
+      <path d="M22,11 C17,11 13,15 13,20 C13,26 22,33 22,33 C22,33 31,26 31,20 C31,15 27,11 22,11 Z" fill="#0cb88a"/>
+      <circle cx="22" cy="19" r="5" fill="#fff"/>
+    </svg>
+    <span class="nav-wordmark">appear<span>local</span><em>.ai</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#audit">Sample Audit</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Free Audit</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div>
+    <p class="hero-eyebrow fade-up">Generative Engine Optimization</p>
+    <h1 class="hero-h1 fade-up delay-1">Get your business <em>cited</em> by AI search.</h1>
+    <p class="hero-sub fade-up delay-2">ChatGPT, Perplexity, and Google AI Overviews are now how local customers find services. We audit and optimize your presence so AI recommends you — not your competitors.</p>
+    <div class="hero-actions fade-up delay-3">
+      <a href="#contact" class="btn-primary">Request a Free Audit</a>
+      <a href="#audit" class="btn-ghost">See a sample report →</a>
+    </div>
+  </div>
+  <div class="fade-up delay-4">
+    <div class="score-card">
+      <p class="score-card-label">GEO Audit Preview</p>
+      <div class="score-big">60<span>%</span></div>
+      <p class="score-biz">Company A · 77 signals</p>
+      <div class="score-bar-wrap">
+        <div class="score-bar-label"><span>NAP Consistency</span><span style="color:#e05252">Fail</span></div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:20%;background:#e05252"></div></div>
+      </div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-label"><span>Schema Markup</span><span style="color:#f5a623">Partial</span></div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:55%;background:#f5a623"></div></div>
+      </div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-label"><span>Citation Coverage</span><span>72%</span></div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:72%"></div></div>
+      </div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-label"><span>Review Signals</span><span>81%</span></div>
+        <div class="score-bar"><div class="score-bar-fill" style="width:81%"></div></div>
+      </div>
+      <span class="score-tag">⚠ Phone mismatch detected on GBP</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- SERVICES -->
+<div id="services">
+  <div class="services-inner">
+    <p class="section-eyebrow">What I do</p>
+    <h2 class="section-h2">Your full GEO audit, done for you.</h2>
+    <p class="section-sub">A 77-signal framework built for the era of AI-powered local search — covering every platform that recommends local businesses.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#0cb88a" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="#0cb88a" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <p class="service-title">AI Visibility Audit</p>
+        <p class="service-desc">We check how — and whether — AI tools like ChatGPT, Perplexity, and Google AI Overviews are citing your business across 77 signals.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M4 6h8M4 14h6" stroke="#0cb88a" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <p class="service-title">NAP & Data Consistency</p>
+        <p class="service-desc">We cross-reference your name, address, and phone number across directories, your website, and Google Business Profile — and flag every mismatch.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1" stroke="#0cb88a" stroke-width="1.5"/><rect x="11" y="3" width="6" height="6" rx="1" stroke="#0cb88a" stroke-width="1.5"/><rect x="3" y="11" width="6" height="6" rx="1" stroke="#0cb88a" stroke-width="1.5"/><rect x="11" y="11" width="6" height="6" rx="1" stroke="#0cb88a" stroke-width="1.5"/></svg>
+        </div>
+        <p class="service-title">Competitor Benchmarking</p>
+        <p class="service-desc">See exactly where you stand versus your top local competitors — with side-by-side signal scores and a clear gap analysis.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M5 15l4-4 3 3 4-6" stroke="#0cb88a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="service-title">Schema & Structured Data</p>
+        <p class="service-desc">AI engines rely on structured data. We audit your schema and deliver ready-to-paste JSON-LD code so you can fix issues the same day.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2C6.686 2 4 4.686 4 8c0 4.5 6 10 6 10s6-5.5 6-10c0-3.314-2.686-6-6-6z" stroke="#0cb88a" stroke-width="1.5"/><circle cx="10" cy="8" r="2" stroke="#0cb88a" stroke-width="1.5"/></svg>
+        </div>
+        <p class="service-title">Citation & Directory Audit</p>
+        <p class="service-desc">We scan 40+ directories to identify missing listings, duplicate entries, and inconsistent data that suppress your AI citation rate.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 3l1.5 4.5H16l-3.75 2.7 1.5 4.5L10 12l-3.75 2.7 1.5-4.5L4 7.5h4.5z" stroke="#0cb88a" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="service-title">Actionable Report & Roadmap</p>
+        <p class="service-desc">Every audit delivers a prioritized action plan — not just a score. Clear next steps ranked by impact, with no technical jargon.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIT SAMPLE -->
+<div id="audit">
+  <p class="section-eyebrow">Sample audit</p>
+  <h2 class="section-h2">What a real audit looks like.</h2>
+  <p class="section-sub">A snapshot from a real audit of a local tree service company in the Greater Boston area. Business name anonymized.</p>
+  <div class="audit-grid">
+    <div>
+      <p style="font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Key findings</p>
+      <div class="audit-findings">
+        <div class="finding">
+          <div class="finding-dot dot-red"></div>
+          <div class="finding-text">
+            <strong>Phone number mismatch — GBP vs. website</strong>
+            <span>781-860-9618 on website · 781-675-3485 on Google Business Profile. AI engines treat these as two different entities.</span>
+          </div>
+        </div>
+        <div class="finding">
+          <div class="finding-dot dot-red"></div>
+          <div class="finding-text">
+            <strong>Missing LocalBusiness schema</strong>
+            <span>No structured data on the homepage. AI tools cannot confidently extract business type, service area, or hours.</span>
+          </div>
+        </div>
+        <div class="finding">
+          <div class="finding-dot dot-yellow"></div>
+          <div class="finding-text">
+            <strong>Incomplete Yelp & Bing listings</strong>
+            <span>Business hours missing on Yelp. Bing Places not claimed. Both are actively scraped by Perplexity.</span>
+          </div>
+        </div>
+        <div class="finding">
+          <div class="finding-dot dot-green"></div>
+          <div class="finding-text">
+            <strong>Strong Google review signals</strong>
+            <span>4.8★ across 112 reviews. Review recency and response rate both above industry benchmark.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Competitor comparison</p>
+      <table class="competitor-table">
+        <thead>
+          <tr>
+            <th>Business</th>
+            <th>GEO Score</th>
+            <th style="text-align:right">Rank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="biz-name">Competitor 1</span></td>
+            <td>
+              <div class="mini-bar-wrap">
+                <div class="mini-bar"><div class="mini-bar-fill" style="width:66%;background:#444"></div></div>
+                <span class="score-pill pill-gray">66%</span>
+              </div>
+            </td>
+            <td style="text-align:right;color:var(--muted);font-size:12px;">#1</td>
+          </tr>
+          <tr>
+            <td><span class="biz-name">Competitor 2</span></td>
+            <td>
+              <div class="mini-bar-wrap">
+                <div class="mini-bar"><div class="mini-bar-fill" style="width:65%;background:#888"></div></div>
+                <span class="score-pill pill-gray">65%</span>
+              </div>
+            </td>
+            <td style="text-align:right;color:var(--muted);font-size:12px;">#2</td>
+          </tr>
+          <tr>
+            <td><span class="biz-you">Company A</span></td>
+            <td>
+              <div class="mini-bar-wrap">
+                <div class="mini-bar"><div class="mini-bar-fill" style="width:60%;background:#e05252"></div></div>
+                <span class="score-pill pill-red">60%</span>
+              </div>
+            </td>
+            <td style="text-align:right;color:#e05252;font-size:12px;">#3 ↓</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:28px;padding:20px;background:var(--teal-light);border-radius:10px;border:1px solid var(--teal-mid);">
+        <p style="font-size:13px;font-weight:500;color:var(--teal);margin-bottom:6px;">Opportunity gap</p>
+        <p style="font-size:14px;color:#1a5c45;line-height:1.6;font-weight:400;">Fixing the NAP mismatch and adding schema markup alone could move Company A from 60% → 71%, placing them above both local competitors.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="contact-inner">
+    <div>
+      <p class="section-eyebrow">Get started</p>
+      <h2 class="section-h2">Request your free GEO audit.</h2>
+      <p class="section-sub">No commitment. I'll run a complimentary review of your AI visibility and send you a one-page preview within 48 hours — including your GEO score and top three issues to fix.</p>
+    </div>
+    <form class="contact-form" id="auditForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Business name</label>
+          <input class="form-input" id="f-biz" type="text" placeholder="Acme Tree Service" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input class="form-input" id="f-name" type="text" placeholder="Jane Smith" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" id="f-email" type="email" placeholder="jane@acmetree.com" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Website URL</label>
+        <input class="form-input" id="f-url" type="url" placeholder="https://acmetree.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Anything else?</label>
+        <textarea class="form-textarea" id="f-notes" placeholder="E.g. main competitors, service area, current concerns..."></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="submitBtn">Send my audit request →</button>
+      <p id="form-status" style="font-size:13px;margin-top:8px;display:none;"></p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 AppearLocal AI. All rights reserved.</p>
+  <a href="mailto:hello@appearlocalai.com">hello@appearlocalai.com</a>
+</footer>
+
+<script>
+  // ── Fade-in on scroll ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Fade-up on load (hero) ──
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    el.style.transitionDelay = (i * 0.12) + 's';
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 100);
+  });
+
+  // ── Dual form submission ──
+  // STEP 1: Replace YOUR_FORM_ID below with your Formspree form ID
+  //         Sign up free at formspree.io → New Form → copy the ID
+  const FORMSPREE_ID = 'YOUR_FORM_ID';
+
+  // STEP 2: Replace YOUR_APPS_SCRIPT_URL below with your Google Apps Script web app URL
+  //         See setup instructions in the README comment below
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxm3IQ8eNl5QJ3K1uoNWFq4mB-Yh1t9AmSqfUo00ci9eAoRl-vO7DE7nSv4tuwlEeK/exec ';
+
+  document.getElementById('auditForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn    = document.getElementById('submitBtn');
+    const status = document.getElementById('form-status');
+    const data   = {
+      business_name : document.getElementById('f-biz').value,
+      your_name     : document.getElementById('f-name').value,
+      email         : document.getElementById('f-email').value,
+      website       : document.getElementById('f-url').value,
+      notes         : document.getElementById('f-notes').value,
+      submitted_at  : new Date().toLocaleString()
+    };
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    status.style.display = 'none';
+
+    let emailOk = false;
+    let sheetOk = false;
+    const errors = [];
+
+    // ── Send to Formspree (email to skliao2003@gmail.com) ──
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      emailOk = res.ok;
+      if (!res.ok) errors.push('email delivery failed');
+    } catch (err) {
+      errors.push('email error: ' + err.message);
+    }
+
+    // ── Send to Google Sheets via Apps Script ──
+    try {
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      sheetOk = res.ok;
+      if (!res.ok) errors.push('sheet save failed');
+    } catch (err) {
+      errors.push('sheet error: ' + err.message);
+    }
+
+    // ── Show result ──
+    status.style.display = 'block';
+    if (emailOk && sheetOk) {
+      btn.textContent = 'Request sent ✓';
+      btn.style.background = '#0a8f6b';
+      status.style.color = '#0cb88a';
+      status.textContent = 'Got it! You\'ll hear back within 48 hours.';
+      document.getElementById('auditForm').reset();
+    } else if (emailOk || sheetOk) {
+      btn.textContent = 'Partially sent';
+      btn.disabled = false;
+      status.style.color = '#d97706';
+      status.textContent = 'Sent, but one destination had an issue: ' + errors.join(', ') + '. You can try again.';
+    } else {
+      btn.textContent = 'Send my audit request →';
+      btn.disabled = false;
+      status.style.color = '#b91c1c';
+      status.textContent = 'Something went wrong. Please email hello@appearlocalai.com directly.';
+    }
+  });
+
+  /*
+  ════════════════════════════════════════════════════════
+  SETUP INSTRUCTIONS
+  ════════════════════════════════════════════════════════
+
+  ── A) FORMSPREE (email to skliao2003@gmail.com) ──
+  1. Go to https://formspree.io and sign up free
+  2. Click "New Form", name it "AppearLocal Audit Requests"
+  3. Set the notification email to: skliao2003@gmail.com
+  4. Copy your form ID (looks like: xpzgkrwa)
+  5. Replace YOUR_FORM_ID above with that ID
+
+  ── B) GOOGLE SHEETS (Apps Script) ──
+  1. Create a new Google Sheet at sheets.google.com
+     Name it: "AppearLocal Audit Leads"
+     Row 1 headers: Timestamp | Business Name | Your Name | Email | Website | Notes
+
+  2. In the Sheet, go to Extensions → Apps Script
+  3. Paste this code:
+
+  function doPost(e) {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.submitted_at,
+      data.business_name,
+      data.your_name,
+      data.email,
+      data.website,
+      data.notes
+    ]);
+    return ContentService
+      .createTextOutput(JSON.stringify({ result: 'success' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  4. Click Deploy → New Deployment
+     Type: Web App
+     Execute as: Me
+     Who has access: Anyone
+  5. Click Deploy → copy the Web App URL
+  6. Replace YOUR_APPS_SCRIPT_URL above with that URL
+
+  ════════════════════════════════════════════════════════
+  */
+</script>
