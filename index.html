@@ -41,9 +41,9 @@
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .nav-logo svg { width: 36px; height: 36px; }
-    .nav-wordmark { font-size: 22px; font-weight: 400; color: var(--dark); letter-spacing: -0.3px; font-family: 'Inter', sans-serif; }
+    .nav-wordmark { font-size: 22px; font-weight: 300; color: var(--dark); letter-spacing: -0.3px; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 6px; }
     .nav-wordmark span { font-weight: 700; color: var(--teal); }
-    .nav-wordmark em { font-style: normal; font-weight: 300; color: var(--teal); opacity: 0.6; letter-spacing: -0.5px; }
+    .nav-wordmark em { font-style: normal; font-size: 11px; font-weight: 700; color: #fff; background: var(--teal); padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; line-height: 1; }
     .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a { font-size: 14px; font-weight: 500; letter-spacing: 0.2px; color: var(--mid); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--dark); }
@@ -167,17 +167,13 @@
 
 <nav>
   <a href="#hero" class="nav-logo">
-    <!-- Search lens with pin icon -->
-    <svg width="38" height="38" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Lens circle -->
-      <circle cx="22" cy="20" r="16" stroke="#0cb88a" stroke-width="2.4"/>
-      <!-- Handle -->
-      <line x1="33" y1="31" x2="44" y2="43" stroke="#0cb88a" stroke-width="3" stroke-linecap="round"/>
-      <!-- Pin inside lens -->
-      <path d="M22,11 C17,11 13,15 13,20 C13,26 22,33 22,33 C22,33 31,26 31,20 C31,15 27,11 22,11 Z" fill="#0cb88a"/>
-      <circle cx="22" cy="19" r="5" fill="#fff"/>
+    <svg width="42" height="42" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="21" cy="21" r="15" stroke="#0cb88a" stroke-width="2.4"/>
+      <line x1="31" y1="31" x2="44" y2="44" stroke="#0cb88a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M21,12 C16,12 12,16 12,21 C12,27 21,34 21,34 C21,34 30,27 30,21 C30,16 26,12 21,12 Z" fill="#0cb88a"/>
+      <circle cx="21" cy="20" r="5" fill="#fff"/>
     </svg>
-    <span class="nav-wordmark">appear<span>local</span><em>.ai</em></span>
+    <span class="nav-wordmark">appear <span>local</span> <em>AI</em></span>
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
@@ -409,7 +405,7 @@
 
 <footer>
   <p>© 2026 AppearLocal AI. All rights reserved.</p>
-  <a href="mailto:hello@appearlocalai.com">hello@appearlocalai.com</a>
+  <a href="mailto:contact@appearlocal-ai.com">contact@appearlocal-ai.com</a>
 </footer>
 
 <script>
@@ -440,7 +436,7 @@
 
   // STEP 2: Replace YOUR_APPS_SCRIPT_URL below with your Google Apps Script web app URL
   //         See setup instructions in the README comment below
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxm3IQ8eNl5QJ3K1uoNWFq4mB-Yh1t9AmSqfUo00ci9eAoRl-vO7DE7nSv4tuwlEeK/exec ';
+  const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
 
   document.getElementById('auditForm').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -507,7 +503,7 @@
       btn.textContent = 'Send my audit request →';
       btn.disabled = false;
       status.style.color = '#b91c1c';
-      status.textContent = 'Something went wrong. Please email hello@appearlocalai.com directly.';
+      status.textContent = 'Something went wrong. Please email contact@appearlocal-ai.com directly.';
     }
   });
 
@@ -551,9 +547,4 @@
      Type: Web App
      Execute as: Me
      Who has access: Anyone
-  5. Click Deploy → copy the Web App URL
-  6. Replace YOUR_APPS_SCRIPT_URL above with that URL
-
-  ════════════════════════════════════════════════════════
-  */
-</script>
+  5. Click Deploy → copy the W
