@@ -399,6 +399,21 @@
       </div>
       <button type="submit" class="form-submit" id="submitBtn">Send my audit request →</button>
       <p id="form-status" style="font-size:13px;margin-top:8px;display:none;"></p>
+
+      <!-- Email alternative -->
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid #2a3147;text-align:center;">
+        <p style="font-size:13px;color:#6b7280;margin-bottom:10px;">Prefer to reach out directly?</p>
+        <a href="mailto:contact@appearlocal-ai.com"
+           style="display:inline-flex;align-items:center;gap:8px;background:#1e2535;border:1px solid #374151;color:#e5e7eb;font-size:14px;font-weight:500;padding:12px 22px;border-radius:7px;text-decoration:none;transition:border-color 0.2s;"
+           onmouseover="this.style.borderColor='#0cb88a';this.style.color='#0cb88a'"
+           onmouseout="this.style.borderColor='#374151';this.style.color='#e5e7eb'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M2 7l10 7 10-7"/>
+          </svg>
+          contact@appearlocal-ai.com
+        </a>
+      </div>
     </form>
   </div>
 </div>
@@ -408,7 +423,7 @@
   <a href="mailto:contact@appearlocal-ai.com">contact@appearlocal-ai.com</a>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── Fade-in on scroll ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
@@ -433,17 +448,14 @@
   // STEP 1: Replace YOUR_FORM_ID below with your Formspree form ID
   //         Sign up free at formspree.io → New Form → copy the ID
   const FORMSPREE_ID = 'YOUR_FORM_ID';
-
-  // STEP 2: Replace YOUR_APPS_SCRIPT_URL below with your Google Apps Script web app URL
-  //         See setup instructions in the README comment below
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxm3IQ8eNl5QJ3K1uoNWFq4mB-Yh1t9AmSqfUo00ci9eAoRl-vO7DE7nSv4tuwlEeK/exec ';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxm3IQ8eNl5QJ3K1uoNWFq4mB-Yh1t9AmSqfUo00ci9eAoRl-vO7DE7nSv4tuwlEeK/exec';
 
   document.getElementById('auditForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const btn    = document.getElementById('submitBtn');
-    const status = document.getElementById('form-status');
-    const data   = {
+    const btn   = document.getElementById('submitBtn');
+    const form  = document.getElementById('auditForm');
+    const data  = {
       business_name : document.getElementById('f-biz').value,
       your_name     : document.getElementById('f-name').value,
       email         : document.getElementById('f-email').value,
@@ -454,57 +466,40 @@
 
     btn.textContent = 'Sending…';
     btn.disabled = true;
-    status.style.display = 'none';
 
-    let emailOk = false;
-    let sheetOk = false;
-    const errors = [];
-
-    // ── Send to Formspree (email to skliao2003@gmail.com) ──
+    // Send to Google Sheets
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      emailOk = res.ok;
-      if (!res.ok) errors.push('email delivery failed');
-    } catch (err) {
-      errors.push('email error: ' + err.message);
-    }
-
-    // ── Send to Google Sheets via Apps Script ──
-    try {
-      const res = await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      sheetOk = res.ok;
-      if (!res.ok) errors.push('sheet save failed');
-    } catch (err) {
-      errors.push('sheet error: ' + err.message);
+    } catch (err) { console.warn('Sheet error:', err); }
+
+    // Send to Formspree if configured
+    if (FORMSPREE_ID !== 'YOUR_FORM_ID') {
+      try {
+        await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } catch (err) { console.warn('Email error:', err); }
     }
 
-    // ── Show result ──
-    status.style.display = 'block';
-    if (emailOk && sheetOk) {
-      btn.textContent = 'Request sent ✓';
-      btn.style.background = '#0a8f6b';
-      status.style.color = '#0cb88a';
-      status.textContent = 'Got it! You\'ll hear back within 48 hours.';
-      document.getElementById('auditForm').reset();
-    } else if (emailOk || sheetOk) {
-      btn.textContent = 'Partially sent';
-      btn.disabled = false;
-      status.style.color = '#d97706';
-      status.textContent = 'Sent, but one destination had an issue: ' + errors.join(', ') + '. You can try again.';
-    } else {
-      btn.textContent = 'Send my audit request →';
-      btn.disabled = false;
-      status.style.color = '#b91c1c';
-      status.textContent = 'Something went wrong. Please email contact@appearlocal-ai.com directly.';
-    }
+    // Replace form with confirmation message
+    form.innerHTML = `
+      <div style="text-align:center;padding:40px 20px;">
+        <div style="width:56px;height:56px;background:#e0f5ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0cb88a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <p style="font-size:20px;font-weight:700;color:#0f1117;margin-bottom:10px;">Request received!</p>
+        <p style="font-size:15px;color:#6b7280;line-height:1.7;max-width:320px;margin:0 auto;">Thanks ${data.your_name.split(' ')[0]} — I'll review your site and send a GEO audit preview within <strong style="color:#0f1117;">48 hours</strong>.</p>
+      </div>
+    `;
   });
 
   /*
@@ -538,13 +533,4 @@
       data.website,
       data.notes
     ]);
-    return ContentService
-      .createTextOutput(JSON.stringify({ result: 'success' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  4. Click Deploy → New Deployment
-     Type: Web App
-     Execute as: Me
-     Who has access: Anyone
-  5. Click Deploy → copy the W
+    return ContentServi
