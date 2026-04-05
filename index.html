@@ -688,18 +688,6 @@
           console.error('Sheets error:', err);
         }
 
-        // Email notification via mailto
-        var subj = encodeURIComponent('New GEO Audit Request - ' + fields.business_name);
-        var bodyText = encodeURIComponent(
-          'Business: ' + fields.business_name + '\n' +
-          'Name: ' + fields.your_name + '\n' +
-          'Email: ' + fields.email + '\n' +
-          'Website: ' + fields.website + '\n' +
-          'Notes: ' + fields.notes + '\n' +
-          'Submitted: ' + fields.submitted_at
-        );
-        window.location.href = 'mailto:contact@appearlocal-ai.com?subject=' + subj + '&body=' + bodyText;
-
         // Show confirmation
         setTimeout(function() {
           form.innerHTML =
