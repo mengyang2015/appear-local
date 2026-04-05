@@ -582,12 +582,12 @@
       <!-- Email alternative -->
       <div style="margin-top:24px;padding-top:20px;border-top:1px solid #2a3147;text-align:center;">
         <p style="font-size:13px;color:#6b7280;margin-bottom:10px;">Prefer to reach out directly?</p>
-        <a href="/cdn-cgi/l/email-protection#4724282933262433072637372226352b2824262b6a262e6924282a" style="display:inline-flex;align-items:center;gap:8px;background:#1e2535;border:1px solid #374151;color:#e5e7eb;font-size:14px;font-weight:500;padding:12px 22px;border-radius:7px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#0cb88a';this.style.color='#0cb88a'" onmouseout="this.style.borderColor='#374151';this.style.color='#e5e7eb'">
+        <a id="emailBtn" href="#" style="display:inline-flex;align-items:center;gap:8px;background:#1e2535;border:1px solid #374151;color:#e5e7eb;font-size:14px;font-weight:500;padding:12px 22px;border-radius:7px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#0cb88a';this.style.color='#0cb88a'" onmouseout="this.style.borderColor='#374151';this.style.color='#e5e7eb'">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="4" width="20" height="16" rx="2"/>
             <path d="M2 7l10 7 10-7"/>
           </svg>
-          <span class="__cf_email__" data-cfemail="98fbf7f6ecf9fbecd8f9e8e8fdf9eaf4f7fbf9f4b5f9f1b6fbf7f5">[email&#160;protected]</span>
+          <span id="emailLabel"></span>
         </a>
       </div>
     </form>
@@ -596,10 +596,27 @@
 
 <footer>
   <p>© 2026 AppearLocal AI. All rights reserved.</p>
-  <a href="mailto:contact@appearlocal-ai.com">contact@appearlocal-ai.com</a>
+  <a id="footerEmail" href="#">contact&#64;appearlocal&#45;ai&#46;com</a>
 </footer>
 
 <script>
+  // ── Build email links at runtime (defeats Cloudflare scanner) ──
+  (function() {
+    var u = 'contact';
+    var d = 'appearlocal-ai.com';
+    var e = u + '@' + d;
+    var m = 'mailto:' + e;
+
+    var btn = document.getElementById('emailBtn');
+    if (btn) { btn.href = m; }
+
+    var lbl = document.getElementById('emailLabel');
+    if (lbl) { lbl.textContent = e; }
+
+    var footer = document.getElementById('footerEmail');
+    if (footer) { footer.href = m; footer.textContent = e; }
+  })();
+
   // Close menu when tapping outside
   document.addEventListener('click', function(e) {
     var nav = document.getElementById('navLinks');
@@ -659,17 +676,21 @@
     btn.textContent = 'Sending…';
     btn.disabled = true;
 
+    console.log('Form submitting...', fields);
+
     // ── Send to Google Sheets via form-encoded POST (works with no-cors) ──
     try {
       const formData = new FormData();
       Object.entries(fields).forEach(([k, v]) => formData.append(k, v));
+      console.log('Sending to Apps Script:', APPS_SCRIPT_URL);
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         body: formData
       });
+      console.log('Apps Script fetch completed (no-cors, no response body)');
     } catch (err) {
-      console.warn('Sheet error:', err);
+      console.error('Sheet error:', err);
     }
 
     // ── Show success and open email client as backup notification ──
@@ -706,9 +727,4 @@
   SETUP INSTRUCTIONS
   ════════════════════════════════════════════════════════
 
-  ── A) FORMSPREE (email to skliao2003@gmail.com) ──
-  1. Go to https://formspree.io and sign up free
-  2. Click "New Form", name it "AppearLocal Audit Requests"
-  3. Set the notification email to: skliao2003@gmail.com
-  4. Copy your form ID (looks like: xpzgkrwa)
-  5. Replace YOUR_FORM_ID above with th
+  ── A) FORMSPREE (email to skliao2003@gmail.com) �
