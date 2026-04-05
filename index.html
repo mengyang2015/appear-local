@@ -600,131 +600,121 @@
 </footer>
 
 <script>
-  // ── Build email links at runtime (defeats Cloudflare scanner) ──
-  (function() {
-    var u = 'contact';
-    var d = 'appearlocal-ai.com';
-    var e = u + '@' + d;
-    var m = 'mailto:' + e;
+  document.addEventListener('DOMContentLoaded', function() {
 
-    var btn = document.getElementById('emailBtn');
-    if (btn) { btn.href = m; }
+    // Build email links at runtime (bypasses Cloudflare obfuscation)
+    var email = 'contact' + '@' + 'appearlocal-ai.com';
+    var mailto = 'mailto:' + email;
+    var emailBtn = document.getElementById('emailBtn');
+    var emailLabel = document.getElementById('emailLabel');
+    var footerEmail = document.getElementById('footerEmail');
+    if (emailBtn) emailBtn.href = mailto;
+    if (emailLabel) emailLabel.textContent = email;
+    if (footerEmail) { footerEmail.href = mailto; footerEmail.textContent = email; }
 
-    var lbl = document.getElementById('emailLabel');
-    if (lbl) { lbl.textContent = e; }
-
-    var footer = document.getElementById('footerEmail');
-    if (footer) { footer.href = m; footer.textContent = e; }
-  })();
-
-  // Close menu when tapping outside
-  document.addEventListener('click', function(e) {
-    var nav = document.getElementById('navLinks');
-    var btn = document.getElementById('hamburger');
-    if (nav && nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
-      closeMenu();
-    }
-  });
-
-  // ── FAQ toggle ──
-  function toggleFaq(header) {
-    const body    = header.nextElementSibling;
-    const chevron = header.querySelector('.faq-chevron');
-    const isOpen  = body.style.display === 'block';
-    body.style.display    = isOpen ? 'none' : 'block';
-    chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-  }
-
-  // ── Fade-in on scroll ──
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    // Close nav when clicking outside
+    document.addEventListener('click', function(evt) {
+      var nav = document.getElementById('navLinks');
+      var btn = document.getElementById('hamburger');
+      if (nav && nav.classList.contains('open') && !nav.contains(evt.target) && !btn.contains(evt.target)) {
+        closeMenu();
+      }
     });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // ── Fade-up on load (hero) ──
-  document.querySelectorAll('.fade-up').forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(18px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    el.style.transitionDelay = (i * 0.12) + 's';
-    setTimeout(() => {
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    }, 100);
-  });
-
-  // ── Form submission ──
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxm3IQ8eNl5QJ3K1uoNWFq4mB-Yh1t9AmSqfUo00ci9eAoRl-vO7DE7nSv4tuwlEeK/exec';
-
-  document.getElementById('auditForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const btn  = document.getElementById('submitBtn');
-    const form = document.getElementById('auditForm');
-
-    const fields = {
-      business_name : document.getElementById('f-biz').value.trim(),
-      your_name     : document.getElementById('f-name').value.trim(),
-      email         : document.getElementById('f-email').value.trim(),
-      website       : document.getElementById('f-url').value.trim(),
-      notes         : document.getElementById('f-notes').value.trim(),
-      submitted_at  : new Date().toLocaleString()
+    // FAQ toggle
+    window.toggleFaq = function(header) {
+      var body = header.nextElementSibling;
+      var chevron = header.querySelector('.faq-chevron');
+      var isOpen = body.style.display === 'block';
+      body.style.display = isOpen ? 'none' : 'block';
+      chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
     };
 
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
-
-    console.log('Form submitting...', fields);
-
-    // ── Send to Google Sheets via form-encoded POST (works with no-cors) ──
-    try {
-      const formData = new FormData();
-      Object.entries(fields).forEach(([k, v]) => formData.append(k, v));
-      console.log('Sending to Apps Script:', APPS_SCRIPT_URL);
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
+    // Fade-in on scroll
+    var scrollObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry, i) {
+        if (entry.isIntersecting) {
+          setTimeout(function() { entry.target.classList.add('visible'); }, i * 80);
+        }
       });
-      console.log('Apps Script fetch completed (no-cors, no response body)');
-    } catch (err) {
-      console.error('Sheet error:', err);
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(function(el) { scrollObserver.observe(el); });
+
+    // Fade-up on load
+    document.querySelectorAll('.fade-up').forEach(function(el, i) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      el.style.transitionDelay = (i * 0.12) + 's';
+      setTimeout(function() {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 100);
+    });
+
+    // Form submission
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxm3IQ8eNl5QJ3K1uoNWFq4mB-Yh1t9AmSqfUo00ci9eAoRl-vO7DE7nSv4tuwlEeK/exec';
+    var form = document.getElementById('auditForm');
+
+    console.log('Script ready. Form found:', !!form);
+
+    if (form) {
+      form.addEventListener('submit', async function(evt) {
+        evt.preventDefault();
+        console.log('Form submit triggered');
+
+        var btn = document.getElementById('submitBtn');
+        var fields = {
+          business_name: document.getElementById('f-biz').value.trim(),
+          your_name:     document.getElementById('f-name').value.trim(),
+          email:         document.getElementById('f-email').value.trim(),
+          website:       document.getElementById('f-url').value.trim(),
+          notes:         document.getElementById('f-notes').value.trim(),
+          submitted_at:  new Date().toLocaleString()
+        };
+
+        console.log('Fields collected:', fields);
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        // Send to Google Sheets
+        try {
+          var formData = new FormData();
+          Object.keys(fields).forEach(function(k) { formData.append(k, fields[k]); });
+          console.log('Posting to Google Sheets...');
+          await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData });
+          console.log('Google Sheets post complete.');
+        } catch(err) {
+          console.error('Sheets error:', err);
+        }
+
+        // Email notification via mailto
+        var subj = encodeURIComponent('New GEO Audit Request - ' + fields.business_name);
+        var bodyText = encodeURIComponent(
+          'Business: ' + fields.business_name + '\n' +
+          'Name: ' + fields.your_name + '\n' +
+          'Email: ' + fields.email + '\n' +
+          'Website: ' + fields.website + '\n' +
+          'Notes: ' + fields.notes + '\n' +
+          'Submitted: ' + fields.submitted_at
+        );
+        window.location.href = 'mailto:contact@appearlocal-ai.com?subject=' + subj + '&body=' + bodyText;
+
+        // Show confirmation
+        setTimeout(function() {
+          form.innerHTML =
+            '<div style="text-align:center;padding:40px 20px;">' +
+              '<div style="width:56px;height:56px;background:#e0f5ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">' +
+                '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0cb88a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+              '</div>' +
+              '<p style="font-size:20px;font-weight:700;color:#0f1117;margin-bottom:10px;">Request received!</p>' +
+              '<p style="font-size:15px;color:#6b7280;line-height:1.7;max-width:320px;margin:0 auto;">Thanks ' + fields.your_name.split(' ')[0] + ' - I will review your site and send a GEO audit preview within <strong style=\'color:#0f1117;\'>48 hours</strong>.</p>' +
+            '</div>';
+        }, 300);
+      });
     }
 
-    // ── Show success and open email client as backup notification ──
-    const subject = encodeURIComponent(`New GEO Audit Request — ${fields.business_name}`);
-    const body = encodeURIComponent(
-      `New audit request submitted:\n\n` +
-      `Business: ${fields.business_name}\n` +
-      `Name: ${fields.your_name}\n` +
-      `Email: ${fields.email}\n` +
-      `Website: ${fields.website}\n` +
-      `Notes: ${fields.notes}\n` +
-      `Submitted: ${fields.submitted_at}`
-    );
-    window.location.href = `mailto:contact@appearlocal-ai.com?subject=${subject}&body=${body}`;
-
-    // ── Replace form with confirmation ──
-    setTimeout(() => {
-      form.innerHTML = `
-        <div style="text-align:center;padding:40px 20px;">
-          <div style="width:56px;height:56px;background:#e0f5ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0cb88a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          </div>
-          <p style="font-size:20px;font-weight:700;color:#0f1117;margin-bottom:10px;">Request received!</p>
-          <p style="font-size:15px;color:#6b7280;line-height:1.7;max-width:320px;margin:0 auto;">Thanks ${fields.your_name.split(' ')[0]} — I'll review your site and send a GEO audit preview within <strong style="color:#0f1117;">48 hours</strong>.</p>
-        </div>
-      `;
-    }, 300);
-  });
-
-  /*
-  ════════════════════════════════════════════════════════
-  SETUP INSTRUCTIONS
-  ════════════════════════════════════════════════════════
-
-  ── A) FORMSPREE (email to skliao2003@gmail.com) �
+  }); // end DOMContentLoaded
+</script>
+</body>
+</html>
