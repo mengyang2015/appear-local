@@ -44,11 +44,16 @@
     .nav-wordmark { font-size: 22px; font-weight: 300; color: var(--dark); letter-spacing: -0.3px; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 6px; }
     .nav-wordmark span { font-weight: 700; color: var(--teal); }
     .nav-wordmark em { font-style: normal; font-size: 11px; font-weight: 700; color: #fff; background: var(--teal); padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; line-height: 1; }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
     .nav-links a { font-size: 14px; font-weight: 500; letter-spacing: 0.2px; color: var(--mid); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--dark); }
     .nav-cta { background: var(--teal); color: #fff !important; padding: 10px 22px; border-radius: 6px; font-weight: 600 !important; transition: background 0.2s !important; }
     .nav-cta:hover { background: var(--teal-hover) !important; }
+    .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px 4px; z-index: 110; }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); border-radius: 2px; transition: transform 0.25s ease, opacity 0.25s ease; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* HERO */
     #hero {
@@ -151,8 +156,26 @@
     .delay-4 { animation-delay: 0.5s; }
 
     @media (max-width: 768px) {
-      nav { padding: 0 24px; }
-      .nav-links { display: none; }
+      nav { padding: 0 24px; height: 64px; }
+      .nav-hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        z-index: 99;
+        padding: 8px 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li { width: 100%; }
+      .nav-links a { display: block; padding: 16px 28px; font-size: 15px; font-weight: 500; color: var(--dark) !important; background: none !important; border-bottom: 1px solid var(--border); border-radius: 0 !important; transition: background 0.15s; }
+      .nav-links a:hover { background: var(--bg2) !important; }
+      .nav-links li:last-child a { border-bottom: none; }
+      .nav-links a.nav-cta { color: var(--teal) !important; font-weight: 700 !important; }
       #hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 40px; }
       .hero-h1 { font-size: 36px; }
       .services-grid { grid-template-columns: 1fr; }
@@ -162,6 +185,18 @@
       footer { flex-direction: column; gap: 8px; padding: 24px; }
     }
   </style>
+  <script>
+    function toggleMenu() {
+      var nav = document.getElementById('navLinks');
+      var btn = document.getElementById('hamburger');
+      nav.classList.toggle('open');
+      btn.classList.toggle('open');
+    }
+    function closeMenu() {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    }
+  </script>
 </head>
 <body>
 
@@ -175,12 +210,15 @@
     </svg>
     <span class="nav-wordmark">appear <span>local</span> <em>AI</em></span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#how-it-works">Why GEO</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#audit">Sample Audit</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact" class="nav-cta">Get a Free Audit</a></li>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#how-it-works" onclick="closeMenu()">Why GEO</a></li>
+    <li><a href="#services" onclick="closeMenu()">Services</a></li>
+    <li><a href="#audit" onclick="closeMenu()">Sample Audit</a></li>
+    <li><a href="#faq" onclick="closeMenu()">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta" onclick="closeMenu()">Get a Free Audit</a></li>
   </ul>
 </nav>
 
@@ -558,10 +596,19 @@
 
 <footer>
   <p>© 2026 AppearLocal AI. All rights reserved.</p>
-  <a href="/cdn-cgi/l/email-protection#2b4844455f4a485f6b4a5b5b4e4a594744484a47064a4205484446"><span class="__cf_email__" data-cfemail="7d1e1213091c1e093d1c0d0d181c0f11121e1c11501c14531e1210">[email&#160;protected]</span></a>
+  <a href="mailto:contact@appearlocal-ai.com">contact@appearlocal-ai.com</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+  // Close menu when tapping outside
+  document.addEventListener('click', function(e) {
+    var nav = document.getElementById('navLinks');
+    var btn = document.getElementById('hamburger');
+    if (nav && nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
   // ── FAQ toggle ──
   function toggleFaq(header) {
     const body    = header.nextElementSibling;
@@ -591,62 +638,67 @@
     }, 100);
   });
 
-  // ── Dual form submission ──
-  // STEP 1: Replace YOUR_FORM_ID below with your Formspree form ID
-  //         Sign up free at formspree.io → New Form → copy the ID
-  const FORMSPREE_ID = 'YOUR_FORM_ID';
+  // ── Form submission ──
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxm3IQ8eNl5QJ3K1uoNWFq4mB-Yh1t9AmSqfUo00ci9eAoRl-vO7DE7nSv4tuwlEeK/exec';
 
   document.getElementById('auditForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const btn   = document.getElementById('submitBtn');
-    const form  = document.getElementById('auditForm');
-    const data  = {
-      business_name : document.getElementById('f-biz').value,
-      your_name     : document.getElementById('f-name').value,
-      email         : document.getElementById('f-email').value,
-      website       : document.getElementById('f-url').value,
-      notes         : document.getElementById('f-notes').value,
+    const btn  = document.getElementById('submitBtn');
+    const form = document.getElementById('auditForm');
+
+    const fields = {
+      business_name : document.getElementById('f-biz').value.trim(),
+      your_name     : document.getElementById('f-name').value.trim(),
+      email         : document.getElementById('f-email').value.trim(),
+      website       : document.getElementById('f-url').value.trim(),
+      notes         : document.getElementById('f-notes').value.trim(),
       submitted_at  : new Date().toLocaleString()
     };
 
     btn.textContent = 'Sending…';
     btn.disabled = true;
 
-    // Send to Google Sheets
+    // ── Send to Google Sheets via form-encoded POST (works with no-cors) ──
     try {
+      const formData = new FormData();
+      Object.entries(fields).forEach(([k, v]) => formData.append(k, v));
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: formData
       });
-    } catch (err) { console.warn('Sheet error:', err); }
-
-    // Send to Formspree if configured
-    if (FORMSPREE_ID !== 'YOUR_FORM_ID') {
-      try {
-        await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(data)
-        });
-      } catch (err) { console.warn('Email error:', err); }
+    } catch (err) {
+      console.warn('Sheet error:', err);
     }
 
-    // Replace form with confirmation message
-    form.innerHTML = `
-      <div style="text-align:center;padding:40px 20px;">
-        <div style="width:56px;height:56px;background:#e0f5ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0cb88a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
+    // ── Show success and open email client as backup notification ──
+    const subject = encodeURIComponent(`New GEO Audit Request — ${fields.business_name}`);
+    const body = encodeURIComponent(
+      `New audit request submitted:\n\n` +
+      `Business: ${fields.business_name}\n` +
+      `Name: ${fields.your_name}\n` +
+      `Email: ${fields.email}\n` +
+      `Website: ${fields.website}\n` +
+      `Notes: ${fields.notes}\n` +
+      `Submitted: ${fields.submitted_at}`
+    );
+    window.location.href = `mailto:contact@appearlocal-ai.com?subject=${subject}&body=${body}`;
+
+    // ── Replace form with confirmation ──
+    setTimeout(() => {
+      form.innerHTML = `
+        <div style="text-align:center;padding:40px 20px;">
+          <div style="width:56px;height:56px;background:#e0f5ee;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0cb88a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <p style="font-size:20px;font-weight:700;color:#0f1117;margin-bottom:10px;">Request received!</p>
+          <p style="font-size:15px;color:#6b7280;line-height:1.7;max-width:320px;margin:0 auto;">Thanks ${fields.your_name.split(' ')[0]} — I'll review your site and send a GEO audit preview within <strong style="color:#0f1117;">48 hours</strong>.</p>
         </div>
-        <p style="font-size:20px;font-weight:700;color:#0f1117;margin-bottom:10px;">Request received!</p>
-        <p style="font-size:15px;color:#6b7280;line-height:1.7;max-width:320px;margin:0 auto;">Thanks ${data.your_name.split(' ')[0]} — I'll review your site and send a GEO audit preview within <strong style="color:#0f1117;">48 hours</strong>.</p>
-      </div>
-    `;
+      `;
+    }, 300);
   });
 
   /*
@@ -659,11 +711,4 @@
   2. Click "New Form", name it "AppearLocal Audit Requests"
   3. Set the notification email to: skliao2003@gmail.com
   4. Copy your form ID (looks like: xpzgkrwa)
-  5. Replace YOUR_FORM_ID above with that ID
-
-  ── B) GOOGLE SHEETS (Apps Script) ──
-  1. Create a new Google Sheet at sheets.google.com
-     Name it: "AppearLocal Audit Leads"
-     Row 1 headers: Timestamp | Business Name | Your Name | Email | Website | Notes
-
-  2. In the Sheet, go to E
+  5. Replace YOUR_FORM_ID above with th
