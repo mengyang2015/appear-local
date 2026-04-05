@@ -36,11 +36,11 @@
       border-bottom: 1px solid var(--border);
       z-index: 100;
       padding: 0 48px;
-      height: 68px;
+      height: 72px;
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo svg { width: 36px; height: 36px; }
+    .nav-logo svg { width: 44px; height: 44px; }
     .nav-wordmark { font-size: 22px; font-weight: 300; color: var(--dark); letter-spacing: -0.3px; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 6px; }
     .nav-wordmark span { font-weight: 700; color: var(--teal); }
     .nav-wordmark em { font-style: normal; font-size: 11px; font-weight: 700; color: #fff; background: var(--teal); padding: 3px 8px; border-radius: 20px; letter-spacing: 0.5px; line-height: 1; }
@@ -176,8 +176,10 @@
     <span class="nav-wordmark">appear <span>local</span> <em>AI</em></span>
   </a>
   <ul class="nav-links">
+    <li><a href="#how-it-works">Why GEO</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#audit">Sample Audit</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact" class="nav-cta">Get a Free Audit</a></li>
   </ul>
 </nav>
@@ -216,6 +218,69 @@
       </div>
       <span class="score-tag">⚠ Phone mismatch detected on GBP</span>
     </div>
+  </div>
+</div>
+
+<!-- HOW CUSTOMERS FIND LOCAL SERVICES -->
+<div id="how-it-works" style="padding:100px 48px;max-width:1060px;margin:0 auto;">
+  <p class="section-eyebrow">The shift that changes everything</p>
+  <h2 class="section-h2">How Customers Find Local Services Has Changed</h2>
+  <p class="section-sub">The majority of buying decisions now start with an AI answer, not a search results page.</p>
+
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin-bottom:24px;">
+
+    <!-- Before -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;">
+      <div style="display:inline-block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:2px;text-transform:uppercase;border:1px solid var(--border);border-radius:20px;padding:3px 12px;margin-bottom:20px;">Before</div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;color:var(--muted);">1</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;">Customer searches Google</div><div style="font-size:12px;color:var(--muted);">Types "tree service near me"</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;color:var(--muted);">2</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;">Sees a list of 10+ links</div><div style="font-size:12px;color:var(--muted);">Dozens of options, no clear winner</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;color:var(--muted);">3</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;">Clicks through multiple sites</div><div style="font-size:12px;color:var(--muted);">Compares prices, hesitates</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;color:var(--muted);">4</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;">Eventually makes a choice</div><div style="font-size:12px;color:var(--muted);">Hours or days later</div></div>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px;gap:6px;">
+      <div style="width:2px;flex:1;background:linear-gradient(to bottom,var(--border),var(--teal));"></div>
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-size:16px;font-weight:700;">→</span>
+      </div>
+      <div style="width:2px;flex:1;background:linear-gradient(to bottom,var(--teal),var(--border));"></div>
+    </div>
+
+    <!-- Now -->
+    <div style="background:#e0f5ee;border:2px solid var(--teal);border-radius:16px;padding:28px;">
+      <div style="display:inline-block;font-size:11px;font-weight:600;color:var(--teal);letter-spacing:2px;text-transform:uppercase;background:#fff;border:1px solid var(--teal-mid);border-radius:20px;padding:3px 12px;margin-bottom:20px;">Now</div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;color:#fff;">1</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;">Asks ChatGPT, Perplexity, or Google AI</div><div style="font-size:12px;color:#047857;">"Best local service near me"</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;color:#fff;">2</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;">Gets a direct answer naming 1–2 businesses</div><div style="font-size:12px;color:#047857;">AI reads structured data, reviews &amp; citations</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">📞</div>
+        <div><div style="font-size:15px;font-weight:800;color:var(--teal);margin-bottom:2px;">Calls immediately</div><div style="font-size:12px;color:#047857;">Decision made in under 60 seconds</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEO callout -->
+  <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 24px;display:flex;align-items:center;gap:16px;">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--teal-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">🎯</div>
+    <div style="font-size:14px;color:var(--mid);line-height:1.7;"><strong style="color:var(--teal);">GEO</strong> (Generative Engine Optimization) is the discipline of making sure your business is the one the AI names — not your competitor. It's the single highest-leverage thing a local business can do right now.</div>
   </div>
 </div>
 
@@ -273,6 +338,9 @@
     </div>
   </div>
 </div>
+
+
+<hr class="divider"/>
 
 <!-- AUDIT SAMPLE -->
 <div id="audit">
@@ -364,6 +432,79 @@
   </div>
 </div>
 
+<!-- FAQ -->
+<div id="faq" style="background:var(--bg2);padding:100px 0;">
+  <div style="max-width:1060px;margin:0 auto;padding:0 48px;">
+    <p class="section-eyebrow">FAQ</p>
+    <h2 class="section-h2">Common questions.</h2>
+    <p class="section-sub">Everything local business owners ask before getting started.</p>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+
+      <div class="faq-item" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
+        <div onclick="toggleFaq(this)" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;">
+          <span style="font-size:15px;font-weight:600;color:var(--dark);">I already pay for SEO — how is this different?</span>
+          <span class="faq-chevron" style="color:var(--muted);transition:transform 0.2s;flex-shrink:0;margin-left:12px;font-size:13px;">▾</span>
+        </div>
+        <div class="faq-body" style="display:none;padding:0 22px 18px;font-size:14px;color:var(--mid);line-height:1.75;border-top:1px solid var(--border);">
+          <div style="padding-top:16px;">Traditional SEO gets you ranked on Google's blue-link results page. GEO (Generative Engine Optimization) is about getting named by AI tools like ChatGPT, Perplexity, and Google AI Overview — which now answer questions directly without showing a list of links. Both matter, but they require different signals. Your SEO investment still counts; this audit identifies the additional layer your SEO agency likely isn't covering.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
+        <div onclick="toggleFaq(this)" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;">
+          <span style="font-size:15px;font-weight:600;color:var(--dark);">Are my customers actually using ChatGPT to find a local service?</span>
+          <span class="faq-chevron" style="color:var(--muted);transition:transform 0.2s;flex-shrink:0;margin-left:12px;font-size:13px;">▾</span>
+        </div>
+        <div class="faq-body" style="display:none;padding:0 22px 18px;font-size:14px;color:var(--mid);line-height:1.75;border-top:1px solid var(--border);">
+          <div style="padding-top:16px;">More than you'd think — and it's growing fast. ChatGPT crossed 200 million weekly users in 2025. Google AI Overview now appears at the top of roughly 50% of local service searches. Voice assistants (Siri, Alexa, Google Assistant) also pull from the same AI data sources. Even if your current customers found you the old way, the next generation of customers is starting their search with a question to an AI — not a Google search.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
+        <div onclick="toggleFaq(this)" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;">
+          <span style="font-size:15px;font-weight:600;color:var(--dark);">My phone is already ringing — why should I care?</span>
+          <span class="faq-chevron" style="color:var(--muted);transition:transform 0.2s;flex-shrink:0;margin-left:12px;font-size:13px;">▾</span>
+        </div>
+        <div class="faq-body" style="display:none;padding:0 22px 18px;font-size:14px;color:var(--mid);line-height:1.75;border-top:1px solid var(--border);">
+          <div style="padding-top:16px;">If your phone is ringing, it means some customers are finding you — but it doesn't tell you how many called a competitor instead. Every time an AI recommends a competitor instead of your business, that's a job that didn't go to your calendar. The goal isn't to replace what's working — it's to close the gap on the calls you're not getting.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
+        <div onclick="toggleFaq(this)" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;">
+          <span style="font-size:15px;font-weight:600;color:var(--dark);">Do I need to hire a developer or can I do this myself?</span>
+          <span class="faq-chevron" style="color:var(--muted);transition:transform 0.2s;flex-shrink:0;margin-left:12px;font-size:13px;">▾</span>
+        </div>
+        <div class="faq-body" style="display:none;padding:0 22px 18px;font-size:14px;color:var(--mid);line-height:1.75;border-top:1px solid var(--border);">
+          <div style="padding-top:16px;">It depends on the task. Adding schema code to your website does require access to your site's HTML or CMS — your web developer can do this in under an hour using the generated code in the action plan. Everything else — updating your Google Business Profile, responding to reviews, uploading photos, fixing Bing Places — you can do yourself with no technical skills.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
+        <div onclick="toggleFaq(this)" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;">
+          <span style="font-size:15px;font-weight:600;color:var(--dark);">How long before I start showing up in AI results?</span>
+          <span class="faq-chevron" style="color:var(--muted);transition:transform 0.2s;flex-shrink:0;margin-left:12px;font-size:13px;">▾</span>
+        </div>
+        <div class="faq-body" style="display:none;padding:0 22px 18px;font-size:14px;color:var(--mid);line-height:1.75;border-top:1px solid var(--border);">
+          <div style="padding-top:16px;">Schema and GBP changes typically take 2–6 weeks to be picked up by AI crawlers. Content changes can be indexed faster — sometimes within days. The full effect of a complete AI visibility optimisation is usually visible within 60–90 days. Unlike paid ads, the results compound over time and don't stop when you stop paying.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;">
+        <div onclick="toggleFaq(this)" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;">
+          <span style="font-size:15px;font-weight:600;color:var(--dark);">What happens if I do nothing?</span>
+          <span class="faq-chevron" style="color:var(--muted);transition:transform 0.2s;flex-shrink:0;margin-left:12px;font-size:13px;">▾</span>
+        </div>
+        <div class="faq-body" style="display:none;padding:0 22px 18px;font-size:14px;color:var(--mid);line-height:1.75;border-top:1px solid var(--border);">
+          <div style="padding-top:16px;">The risk is gradual but real. AI tools are updated constantly, and businesses that get cited early tend to stay cited — because citations build authority which drives more citations. Competitors who act now will build a structural advantage that gets harder to close. Waiting 6 months makes catching up significantly harder.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <hr class="divider"/>
 
 <!-- CONTACT -->
@@ -403,15 +544,12 @@
       <!-- Email alternative -->
       <div style="margin-top:24px;padding-top:20px;border-top:1px solid #2a3147;text-align:center;">
         <p style="font-size:13px;color:#6b7280;margin-bottom:10px;">Prefer to reach out directly?</p>
-        <a href="mailto:contact@appearlocal-ai.com"
-           style="display:inline-flex;align-items:center;gap:8px;background:#1e2535;border:1px solid #374151;color:#e5e7eb;font-size:14px;font-weight:500;padding:12px 22px;border-radius:7px;text-decoration:none;transition:border-color 0.2s;"
-           onmouseover="this.style.borderColor='#0cb88a';this.style.color='#0cb88a'"
-           onmouseout="this.style.borderColor='#374151';this.style.color='#e5e7eb'">
+        <a href="/cdn-cgi/l/email-protection#4724282933262433072637372226352b2824262b6a262e6924282a" style="display:inline-flex;align-items:center;gap:8px;background:#1e2535;border:1px solid #374151;color:#e5e7eb;font-size:14px;font-weight:500;padding:12px 22px;border-radius:7px;text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#0cb88a';this.style.color='#0cb88a'" onmouseout="this.style.borderColor='#374151';this.style.color='#e5e7eb'">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="4" width="20" height="16" rx="2"/>
             <path d="M2 7l10 7 10-7"/>
           </svg>
-          contact@appearlocal-ai.com
+          <span class="__cf_email__" data-cfemail="98fbf7f6ecf9fbecd8f9e8e8fdf9eaf4f7fbf9f4b5f9f1b6fbf7f5">[email&#160;protected]</span>
         </a>
       </div>
     </form>
@@ -420,10 +558,19 @@
 
 <footer>
   <p>© 2026 AppearLocal AI. All rights reserved.</p>
-  <a href="mailto:contact@appearlocal-ai.com">contact@appearlocal-ai.com</a>
+  <a href="/cdn-cgi/l/email-protection#2b4844455f4a485f6b4a5b5b4e4a594744484a47064a4205484446"><span class="__cf_email__" data-cfemail="7d1e1213091c1e093d1c0d0d181c0f11121e1c11501c14531e1210">[email&#160;protected]</span></a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── FAQ toggle ──
+  function toggleFaq(header) {
+    const body    = header.nextElementSibling;
+    const chevron = header.querySelector('.faq-chevron');
+    const isOpen  = body.style.display === 'block';
+    body.style.display    = isOpen ? 'none' : 'block';
+    chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+  }
+
   // ── Fade-in on scroll ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
@@ -519,18 +666,4 @@
      Name it: "AppearLocal Audit Leads"
      Row 1 headers: Timestamp | Business Name | Your Name | Email | Website | Notes
 
-  2. In the Sheet, go to Extensions → Apps Script
-  3. Paste this code:
-
-  function doPost(e) {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
-    sheet.appendRow([
-      data.submitted_at,
-      data.business_name,
-      data.your_name,
-      data.email,
-      data.website,
-      data.notes
-    ]);
-    return ContentServi
+  2. In the Sheet, go to E
