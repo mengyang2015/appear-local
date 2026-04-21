@@ -606,7 +606,7 @@
       </div>
       <div class="form-group">
         <label class="form-label">Website URL</label>
-        <input class="form-input" id="f-url" type="url" placeholder="https://acmetree.com"/>
+        <input class="form-input" id="f-url" type="text" placeholder="e.g. acmetree.com"/>
       </div>
       <div class="form-group">
         <label class="form-label">Anything else?</label>
@@ -700,11 +700,12 @@
         console.log('Form submit triggered');
 
         var btn = document.getElementById('submitBtn');
+        var rawUrl = document.getElementById('f-url').value.trim();
         var fields = {
           business_name: document.getElementById('f-biz').value.trim(),
           your_name:     document.getElementById('f-name').value.trim(),
           email:         document.getElementById('f-email').value.trim(),
-          website:       document.getElementById('f-url').value.trim(),
+          website:       rawUrl && !rawUrl.match(/^https?:\/\//) ? 'https://' + rawUrl : rawUrl,
           notes:         document.getElementById('f-notes').value.trim(),
           submitted_at:  new Date().toLocaleString()
         };
